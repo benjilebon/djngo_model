@@ -1,6 +1,3 @@
-# Kubex cloud Graphical User Interface
-
-Ce projet contient tous les fichiers nécessaires au déploiement d'une interface utilisateur "exemple jrojet django", y compris une base de données basique et les prérequis de l'environnement virtuel.
 
 ## Langages et spécifications
 
