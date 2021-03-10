@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <!-- based css -->
+    <link href="{% static 'assets/css/page_graphics.css' %}" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="{% static 'bower_components/morrisjs/morris.css' %}" rel="stylesheet">
+    <!-- Bootstrap Multiselect CSS -->
+    <link href="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+  <div id="page-wrapper">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h1 class="page-header">Outils de Visualisation Graphique et Statistique</h1>
+      </div>
+      <div class="dropdown col-lg-12">
+        <button id="selectDatasetBtn" class="btn btn-outline btn-success dropdown-toggle col-lg-12" type="button" data-toggle="dropdown">Choisir le type de donnée à afficher
+          <span class="caret"></span></button>
+          <ul id="format" class="dropdown-menu col-lg-12">
+            {% for f in formats %}<li><a href="#" data-id={{f.0}}>{{f.1}}</a></li>{% endfor %}
+          </ul>
+      </div>
+    <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <br>
+    <!-- /.row -->
+    <div id="selectBox_container" class="row"></div>
+    <div id="graphic_container" class="row">
+      <h3>Aucun dataset sélectionné.</h3>
+    </div>
+
+    <div id="controlPanel_container" class="row"></div>
+  
+  </div>
+  <!-- /#page-wrapper -->
+
+  {% endblock %}
+
+  {% block scripts %}
+
+  <!-- Morris Charts JavaScript -->
+<!--   <script src="{% static 'bower_components/raphael/raphael-min.js' %}"></script>
+  <script src="{% static 'bower_components/morrisjs/morris.min.js' %}"></script>
+  <script src="{% static 'js/morris-data.js' %}"></script> -->
+
+  <!-- Flot Charts JavaScript -->
+<!--   <script src="{% static 'bower_components/flot/excanvas.min.js' %}"></script>
+  <script src="{% static 'bower_components/flot/jquery.flot.js' %}"></script>
+  <script src="{% static 'bower_components/flot/jquery.flot.pie.js' %}"></script>
+  <script src="{% static 'bower_components/flot/jquery.flot.resize.js' %}"></script>
+  <script src="{% static 'bower_components/flot/jquery.flot.time.js' %}"></script>
+  <script src="{% static 'bower_components/flot.tooltip/js/jquery.flot.tooltip.min.js' %}"></script>
+  <script src="{% static 'js/flot-data.js' %}"></script> -->
+  <!-- Echarts Charts Js -->
+  <script src="{% static 'assets/echartsJs/echarts.min.js' %}"></script>
+  <script src="{% static 'assets/echartsJs/ecStat.min.js' %}"></script>
+  <script src="{% static 'js/page_graphics.js' %}"></script>
+  <!-- Bootstrap Multiselect Js -->
+  <script src="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.js' %}"></script>
+  {% endblock %}

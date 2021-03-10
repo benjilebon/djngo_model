@@ -1,0 +1,39 @@
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      <i class="fa fa-book fa-fw"></i> <strong>{{kube.name}}</strong>
+    </div>
+    <div class="panel-body">
+      <!-- <p>{{kubex.description}}</br></br> a ajouter si utile dans BDD -->
+                <div class="pull-right">
+          {% if user == kube.owner or user.is_superuser %}<button type="button" class="btn btn-info" onclick="editKubeConfiguration(event)">
+            <span class="glyphicon glyphicon-wrench"></span> Paramétrer
+          </button>{% endif %}
+        </div>
+        <strong>Numéro de série :</strong> <span name="sn">{{kube.SN}}</span><br/>
+        <strong>Utilisateurs ({{kube.users.all|length}}):</strong> {% for usr in kube.users.all %}{{usr.name}}{% endfor %}<br/>
+        <strong>IP :</strong> {{kube.IP}}</br>
+
+        <div class="panel-footer"><strong>Données :</strong> {% for s in kube.sensors.all %}
+          <div class="pull-right" data-sid={{s.SID}} >
+          {% if user == kube.owner or user.is_superuser %}<button type="button" class="btn btn-info" onclick="editSensorConfiguration(event)">
+            <span class="glyphicon glyphicon-wrench"></span> Paramétrer
+          </button>{% endif %}
+          </div>
+          <p><strong> Senseur </strong><span name="sid">{{s.SID}}</span> : <br/>
+          {% for data in s.data.all %}
+          <button type="button" class="btn btn-outline btn-warning" onclick="location.href='datasets#{{data.id}}';">{{data.title}}</button>
+        {% empty %}No dataset generated yet !{% endfor %}{% endfor %}</p>
+<!--         <div class="pull-right">
+          <button type="button" class="btn btn-info">
+            <span class="glyphicon glyphicon-th"></span> Tableau
+          </button>
+          <button type="button" class="btn btn-info">
+            <span class="glyphicon glyphicon-cd"></span> Analyse
+          </button>
+          <button type="button" class="btn btn-info">
+            <span class="glyphicon glyphicon-download-alt"></span> Export
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>

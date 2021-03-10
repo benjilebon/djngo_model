@@ -1,0 +1,25 @@
+<div class="panel panel-red" id="{{ticket.id}}">
+          <div class="panel-heading">
+            <i class="fa fa-support fa-fw"></i> {{ticket.title}}
+          </div>
+      <div class="panel-body">
+        <p>{{ticket.description|linebreaks}}
+           <!-- <strong>Propriétaire:</strong> {{dataset.owner}}</br> for analyses, owner needs to be set in DB first-->
+           <strong>Ouvert par:</strong> {{ticket.owner.name}}</br>
+           <strong>Statut:</strong> {{ticket.get_status_display}}</br>
+           {% if ticket.status != 'N' %}<strong>Accepté par:</strong> {{ticket.in_charge.name}}</p>{% endif %}
+           <div class="pull-right">
+             <button type="button" class="btn btn-warning">
+              <span class="fa fa-thumbs-up fa-fw"></span> Résolu
+          </button>
+          <button type="button" class="btn btn-warning">
+             <span class="fa fa-envelope fa-fw"></span> Message
+         </button>
+   </div>
+</div>
+<div class="panel-footer">Tags:&nbsp&nbsp&nbsp&nbsp
+  {% for keyword in ticket.keywords.all %}
+  <button type="button" class="btn btn-outline btn-warning">{{keyword.word}}</button>
+  {% endfor %}
+</div>
+</div>

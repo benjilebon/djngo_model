@@ -1,0 +1,23 @@
+<div class="panel panel-green" id="analyse_{{analyse.id}}">
+  <div class="panel-heading">
+    <i class="fa fa-book fa-fw"></i> {{analyse.title}}
+  </div>
+  <div class="panel-body">
+    <div>
+      <p>
+        <strong>Tâche {{analyse.id}} - {{analyse.title}}</strong>
+        <span class="pull-right text-muted">{{analyse.progress}}% Complete</span>
+      </p>
+      <div class="progress progress-striped active">
+        <div class="progress-bar progress-bar-{{analyse.get_status_style}}" role="progressbar" aria-valuenow="{{analyse.progress|floatformat}}" aria-valuemin="0" aria-valuemax="100" style="width: {{analyse.progress|floatformat}}%">
+          <span class="sr-only">{{analyse.progress}}% Complete (success)</span>
+        </div>
+      </div>
+      <strong>Statut :</strong> {{analyse.get_status_display}}<br/>
+      <strong>Créée le :</strong> {{analyse.creation_time}}<br/>
+      <strong>Algorithme utilisé :</strong> {{analyse.algorithm.title}}<br/>
+      <strong>Rattachée à :</strong> {{analyse.kubex.name}}<br/>
+      {% if analyse.results_id %}<strong>Résultats :</strong> <a href="datasets#{{analyse.results_id}}">Dataset {{analyse.results_id}}</a>{% endif %}
+    </div>
+  </div>
+</div>

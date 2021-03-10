@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Tâches</a></h1>
+            <div class="pull-right">
+
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+      
+      {% for analyse in analyses %}
+    <div class="col-lg-4 col-md-6">
+    <div class="panel panel-{{analyse.get_status_panel}} id={{analyse.id}}">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-tasks fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <p>{{analyse.title}}</p>
+                </div>
+                <div class="col-xs-12 text-right">{{analyse.modification_time}}</div>
+            </div>
+        </div>
+        <a href="#">
+            <div class="panel-footer">
+                <span class="pull-left">Voir Détails</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div>
+      {% endfor %}
+
+    </div>
+</div>
+
+{% endblock %}

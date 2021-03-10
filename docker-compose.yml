@@ -1,0 +1,26 @@
+version: "3.8"
+   
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=kubex
+      - POSTGRES_USER=audensiel
+      - POSTGRES_PASSWORD=Audensiel2018
+    volumes:
+      - .:/kubex_gui
+
+
+
+  web:
+    build: .
+    
+    volumes:
+      - .:/kubex_gui
+    
+    command: python manage.py runserver 0.0.0.0:8000
+
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Gestion des Kubex</a></h1>
+            <div class="pull-right">
+
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <div id="alert_container"></div>
+    <!-- /.row -->
+    <div class="row">
+      {% for kube in kubex %}
+      <div class="col-lg-4 col-md-6">
+      {% include "panels/kube.html" with kube=kube user=request.user only %}
+      </div>
+      {% empty %}
+      <div class="col-lg-4 col-md-6">
+      <div class="panel panel-green">
+          <div class="panel-heading">
+            <i class="fa fa-book fa-fw"></i> Aucune donnée
+          </div>
+      <div class="panel-body">
+           <a href="kubex">Configurez votre Kubex pour envoyer des données</a>
+   </div>
+</div>
+</div>
+</div> 
+      {% endfor %}      
+    </div>
+    <!-- /.row -->
+</div>
+<!-- /#page-wrapper -->
+
+{% include "panels/kubex_modal.html" %} <!-- include once sensor + kube config modal templates -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/page_kubex.js' %}"></script>
+{% endblock %}

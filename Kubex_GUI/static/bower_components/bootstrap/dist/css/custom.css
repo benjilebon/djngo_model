@@ -1,0 +1,17 @@
+/*body { background: #000000 !important;} /*Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+
+/*.navbar {
+    color: #33333;
+    background-color: #333333;
+}*/:
+@media (min-width: 768px) {
+  .navbar-toggle {
+      display:none !important
+  }
+}
+.container-fluid {
+  padding-right: 15px;
+  padding-left: 0px !important;
+  margin-right: auto;
+  margin-left: 0px!important;
+}

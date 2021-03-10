@@ -1,0 +1,39 @@
+<div class="panel panel-yellow" id="dataset_{{dataset.id}}">
+  <div class="panel-heading">
+    <i class="fa fa-book fa-fw"></i><span name="title"> {{dataset.title}}</span>
+  </div>
+  <div class="panel-body">
+    
+      <span name="description">{{dataset.description}}</span><br>
+     <!-- <strong>Propriétaire:</strong> {{dataset.owner}}</br> for analyses, owner needs to be set in DB first-->
+     <strong>Format :</strong> <span name="format">{{dataset.get_data_format_display}}</span><br/>
+     <strong>Kube :</strong> <span name="kube">{{dataset.origin.kubex.name}}</span><br/>
+     {% if dataset.origin.SID %}
+     <strong>Senseur :</strong> <span name="origin"> {{dataset.origin.SID}}</span><br/>
+     {% else %}
+     <strong>Analyse :</strong> <span name="origin">{{dataset.origin.title}}</span><br/>
+     {% endif %}
+     <strong>Date :</strong> <span data-value="{{dataset.timestamp}}" name="date">{{dataset.creation_time}}</span><br/>
+     <strong>Taille :</strong> <span name="size">{{dataset.data|length}}</span> octets
+    
+    <div class="pull-right">
+      <button type="button" class="btn btn-warning" onclick="editDataset(event)">
+        <span class="glyphicon glyphicon-pencil"></span> Editer
+      </button>
+      <button type="button" class="btn btn-warning" onclick="confirmation(event)">
+        <span class="glyphicon glyphicon-trash"></span> Supprimer
+      </button>
+      <button type="button" class="btn btn-warning" onclick="location.href='analysis';">
+        <span class="glyphicon glyphicon-cd"></span> Analyse
+      </button>
+      <button type="button" class="btn btn-warning">
+        <span class="glyphicon glyphicon-download-alt"></span> Export
+      </button>
+    </div>
+  </div>
+  <div class="panel-footer">Mots-clés:&nbsp&nbsp&nbsp&nbsp
+    {% for keyword in dataset.keywords.all %}
+    <button type="button" class="btn btn-outline btn-warning">{{keyword.word}}</button>
+    {% endfor %}
+  </div>
+</div>

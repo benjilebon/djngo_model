@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Tickets</a></h1>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="panel panel-yellow">
+        <form enctype="multipart/form-data" class="form-top" id="dataset-form" method="post" action="/support/add">
+          {% csrf_token %}
+          <fieldset enabled>
+            <div class="panel-heading">
+              <i class="fa fa-plus fa-fw"></i> Créer un ticket
+              <input required name="title" class="form-control" placeholder="Nom de l'incident"></input>
+            </div>
+            <div class="panel-body">
+            <div class="form-group">
+              <label for="keywords-input">Veuillez choisir les tags associés</label>
+              <input type="text" id="keywords-input" name="keywords-input" class="form-control" data-role="tagsinput" />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <textarea required rows=10 name="description" maxlength=400 placeholder="Décrivez brièvement le probème rencontré" class="form-control"></textarea>
+            </div>
+            <label>Les notifications concernant ce ticket seront envoyées à  {{username}}</label>
+            </div>
+            <div class="panel-footer">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary" class="form-control">Créer le ticket</button>
+              </div>
+            </div>
+            </fieldset>
+          </form>
+          <div id="hiddenInfo">
+            {% for keyword in keywords %}
+            <span>{{keyword.word}}</span>
+            {% endfor %}
+          </div>
+        </div>
+
+{% for ticket in tickets %}
+{% include "panels/ticket.html" with ticket=ticket only %}      
+{% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/page_dataset.js' %}"></script>
+<script src="{% static 'assets/bootstrap-tagsinput/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/typeheadJs/typeahead.bundle.min.js' %}"></script>
+{% endblock %}

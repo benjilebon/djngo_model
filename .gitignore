@@ -1,0 +1,10 @@
+**/__pycache__/
+**/migrations/*
+kubex_data/datasets/
+logs/*
+tmp/
+*.pyc
+*.sqlite3
+analyses/*
+scripts/
+*virtualenv/

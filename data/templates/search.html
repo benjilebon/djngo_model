@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Résultats de la recherche</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="page-header">Datasets</h2>
+      <div class="row">
+      {% for dataset in query_datasets %}
+      {% cycle '</div><div class="row">' '' %}
+      <div class="col-lg-6">
+        {% include "panels/dataset.html" with dataset=dataset only %}
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+
+    <div class="col-lg-12">
+      <h2 class="page-header">Analyses</h2>
+      <div class="row">
+      {% for analyse in query_analyses %}
+      {% cycle '</div><div class="row">' '' %}
+      <div class="col-lg-6">
+        {% include "panels/analyse.html" with analyse=analyse only %}
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+
+    <div class="col-lg-12">
+      <h2 class="page-header">Messages</h2>
+      <div class="row">
+      {% for message in query_messages %}
+      {% cycle '</div><div class="row">' '' %}
+      <div class="col-lg-6">
+        {% include "panels/message.html" with message=message only %}
+      </div>
+      {% endfor %}
+    </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<!-- custom scripts for page search -->
+<script src="{% static 'js/page_search.js' %}"></script>
+
+{% endblock %}    

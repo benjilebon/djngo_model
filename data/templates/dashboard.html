@@ -1,0 +1,481 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <!-- Timeline CSS  -->
+    <link href="{% static 'dist/css/timeline.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/page_dataset.css' %}" rel="stylesheet">
+    <!-- Bootstrap Multiselect CSS -->
+    <link href="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Tableau de bord</a></h1>
+            <div class="pull-right">
+
+            </div>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    
+    <div id="alert_container"></div>
+    <!-- /.row -->
+    <div class="row">
+
+      <div class="col-lg-4 col-md-6">
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <div class="row">
+                      <div class="col-xs-3">
+                          <i class="fa fa-cube fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                          <div class="huge">{{kubex|length}}</div>
+                          <div>Kube connectés</div>
+                      </div>
+                  </div>
+              </div>
+              <a href="kubex">
+                  <div class="panel-footer">
+                      <span class="pull-left">Voir Détails</span>
+                      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                      <div class="clearfix"></div>
+                  </div>
+              </a>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+          <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <div class="row">
+                      <div class="col-xs-3">
+                          <i class="fa fa-database fa-5x"></i>
+                      </div>
+                      <div class="col-xs-9 text-right">
+                          <div class="huge">{{datasets|length}}</div>
+                          <div>Jeux de données</div>
+                      </div>
+                  </div>
+              </div>
+              <a href="datasets">
+                  <div class="panel-footer">
+                      <span class="pull-left">Voir Détails</span>
+                      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                      <div class="clearfix"></div>
+                  </div>
+              </a>
+          </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+       <div class="panel panel-primary">
+           <div class="panel-heading">
+               <div class="row">
+                   <div class="col-xs-3">
+                       <i class="fa fa-tasks fa-5x"></i>
+                   </div>
+                   <div class="col-xs-9 text-right">
+                       <div class="huge">{{analyses_ongoing}}</div>
+                       <div>Analyses en cours</div>
+                   </div>
+               </div>
+           </div>
+           <a href="tasks">
+               <div class="panel-footer">
+                   <span class="pull-left">Voir Détails</span>
+                   <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                   <div class="clearfix"></div>
+               </div>
+           </a>
+       </div>
+   </div>
+
+   <div class="col-lg-4 col-md-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-bell fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge">{{notifications|length}}</div>
+                    <div>Nouvelles notifications!</div>
+                </div>
+            </div>
+        </div>
+        <a href="alerts">
+            <div class="panel-footer">
+                <span class="pull-left">Voir Détails</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="col-lg-4 col-md-6">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-envelope fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge">{{messages_new}}</div>
+                    <div>Nouveaux messages!</div>
+                </div>
+            </div>
+        </div>
+        <a href="inbox">
+            <div class="panel-footer">
+                <span class="pull-left">Voir Détails</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="col-lg-4 col-md-6">
+    <div class="panel panel-red">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <i class="fa fa-support fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <div class="huge">{{tickets|length}}</div>
+                    <div>Tickets en cours !</div>
+                </div>
+            </div>
+        </div>
+        <a href="support">
+            <div class="panel-footer">
+                <span class="pull-left">Voir Details</span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                <div class="clearfix"></div>
+            </div>
+        </a>
+    </div>
+</div>
+</div>
+<!-- /.row -->
+
+
+<div class="row">
+  <hr>
+</div>
+
+
+
+<div class="row">
+    <div class="col-lg-8">
+      <!-- <div class="sidebar-search input-group custom-search-form">
+          <input type="text" class="form-control" placeholder="Chercher dans les jeux de données...">
+          <span class="input-group-btn">
+              <button class="btn btn-default" type="button">
+                  <i class="fa fa-search"></i>
+              </button>
+          </span>
+      </div> -->
+       <div id="dataset-search-input-container" class="sidebar-search input-group custom-search-form row" style="width: 100%;">
+        <div class="col-md-6">
+          <input id="dataset-searchBar" type="text" class="form-control" placeholder="Chercher dans les jeux de données..." data-role="tagsinput">
+        </div>
+        <div class="col-md-4">
+          <span>Dans les champs</span>
+          <!-- <span title="Filter" style="padding: 10px;font-size: 20px;vertical-align: middle;"><i class="fa fa-filter"></i></span> -->
+          <select id="searchBar-filter" multiple="multiple">
+            <option value="title">Titre</option>
+            <option value="description">Description</option>
+            <option value="keywords">Mots-clés</option>
+          </select>
+           <span class="input-group-btn" style="display: inline-block;">
+              <button id="dataset-search-btn" class="btn btn-primary" type="button">
+                  <b>Lancer la recherche</b>&nbsp;&nbsp;<i class="fa fa-search"></i>
+              </button>
+          </span>
+        </div>
+      </div>
+      <div id="sort-btn-container" class="btn-group" role="toolbar">
+        <button type="button" data-sortKey="date" data-state="active-descend" class="btn btn-info">Date&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="title" data-state="deactive" class="btn btn-default">Titre&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="kube" date-state="deactive" class="btn btn-default">Kube&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="size" date-state="deactive" class="btn btn-default">Taille&nbsp;<i class="fa fa-angle-down"></i></button>
+      </div>
+      <br>
+      <div id="dataset-container">
+        {% for dataset in datasets %}
+        {% include "panels/dataset.html" with dataset=dataset only %}
+        {% endfor %}
+      </div>
+<!--       <div class="panel panel-yellow">
+          <div class="panel-heading">
+            <i class="fa fa-book fa-fw"></i> Données 4:  ENTRÉES ET SORTIES DES GARES DES LIGNES C ET L DU RÉSEAU TRANSILIEN
+          </div>
+      <div class="panel-body">
+        <p>Adresses et coordonnées des entrées et sorties des gares Transilien des lignes C et L.</br></br>
+
+           <strong>Producteur:</strong> Transilien</br>
+           <strong>Licence:</strong> SNCF Open Data</br>
+           <strong>Données:</strong> 295 éléments</p>
+           <div class="pull-right">
+             <button type="button" class="btn btn-warning">
+              <span class="glyphicon glyphicon-th"></span> Tableau
+          </button>
+          <button type="button" class="btn btn-warning">
+             <span class="glyphicon glyphicon-globe"></span> Carte
+         </button>
+         <button type="button" class="btn btn-warning">
+            <span class="glyphicon glyphicon-cd"></span> Analyse
+        </button>
+        <button type="button" class="btn btn-warning">
+           <span class="glyphicon glyphicon-download-alt"></span> Export
+       </button>
+   </div>
+</div>
+<div class="panel-footer">Mots-clés:&nbsp&nbsp&nbsp&nbsp
+  <button type="button" class="btn btn-outline btn-warning">Gare de voyageurs</button>
+  <button type="button" class="btn btn-outline btn-warning">Géolocalisation</button>
+  <button type="button" class="btn btn-outline btn-warning">Ile-de-France</button>
+</div>
+</div>
+
+<div class="panel panel-yellow">
+  <div class="panel-heading">
+    <i class="fa fa-book fa-fw"></i> Données 3:  CARTOGRAPHIE OPENSTREETMAP DES GARES SNCF EN RÉGION LORRAINE
+
+</div>
+<div class="panel-body">
+  <p>Cartographie OpenStreetMap des gares en région Lorraine.</br></br>
+   <strong>Producteur:</strong> OpenStreetMap</br>
+   <strong>Licence:</strong> Open Data Commons Open Database License (ODbL)</br>
+   <strong>Données:</strong> 363 éléments</p>
+   <div class="pull-right">
+     <button type="button" class="btn btn-warning">
+      <span class="glyphicon glyphicon-th"></span> Tableau
+  </button>
+  <button type="button" class="btn btn-warning">
+     <span class="glyphicon glyphicon-globe"></span> Carte
+ </button>
+ <button type="button" class="btn btn-warning">
+    <span class="glyphicon glyphicon-cd"></span> Analyse
+</button>
+<button type="button" class="btn btn-warning">
+   <span class="glyphicon glyphicon-download-alt"></span> Export
+</button>
+</div>
+</div>
+<div class="panel-footer">Mots-clés:&nbsp&nbsp&nbsp&nbsp
+  <button type="button" class="btn btn-outline btn-warning">Equipement</button>
+  <button type="button" class="btn btn-outline btn-warning">Géolocalisation</button>
+  <button type="button" class="btn btn-outline btn-warning">gare de voyageurs</button>
+  <button type="button" class="btn btn-outline btn-warning">Lorraine</button>
+  <button type="button" class="btn btn-outline btn-warning">OpenStreetMap</button>
+</div>
+</div>
+
+<div class="panel panel-yellow">
+  <div class="panel-heading">
+    <i class="fa fa-book fa-fw"></i> Données 2: RÉFÉRENTIEL DES GARES DE VOYAGEURS GARE DE VOYAGEURS CODE UIC GÉOLOCALISATION
+</div>
+<div class="panel-body">
+  <p>Référentiel des gares de voyageurs</br></br>
+
+   <strong>Producteur:</strong> Gares & Connexions</br>
+   <strong>Licence:</strong> SNCF Open Data</br>
+   <strong>Données:</strong> 2980 éléments</p>
+   <div class="pull-right">
+     <button type="button" class="btn btn-warning">
+      <span class="glyphicon glyphicon-th"></span> Tableau
+  </button>
+  <button type="button" class="btn btn-warning">
+     <span class="glyphicon glyphicon-globe"></span> Carte
+ </button>
+ <button type="button" class="btn btn-warning">
+    <span class="glyphicon glyphicon-cd"></span> Analyse
+</button>
+<button type="button" class="btn btn-warning">
+   <span class="glyphicon glyphicon-download-alt"></span> Export
+</button>
+</div>
+</div>
+<div class="panel-footer">Mots-clés:&nbsp&nbsp&nbsp&nbsp
+  <button type="button" class="btn btn-outline btn-warning">Gare de voyageurs</button>
+  <button type="button" class="btn btn-outline btn-warning">Code UIC</button>
+  <button type="button" class="btn btn-outline btn-warning">Géolocalisation</button>
+</div>
+</div>
+<div class="panel panel-yellow">
+  <div class="panel-heading">
+    <i class="fa fa-book fa-fw"></i> Données 1: INCIDENTS DE SÉCURITÉ
+</div>
+<div class="panel-body">
+  <p>Description et localisation des incidents de sécurité mis à jour chaque semaine.</br></br>
+
+   <strong>Producteur:</strong> Direction Sécurité & Qualité de Service Ferroviaire</br>
+   <strong>Licence:</strong> SNCF Open Data</br>
+   <strong>Données:</strong> 1110 éléments</p>
+   <div class="pull-right">
+     <button type="button" class="btn btn-warning">
+      <span class="glyphicon glyphicon-th"></span> Tableau
+  </button>
+  <button type="button" class="btn btn-warning">
+     <span class="glyphicon glyphicon-globe"></span> Carte
+ </button>
+ <button type="button" class="btn btn-warning">
+    <span class="glyphicon glyphicon-cd"></span> Analyse
+</button>
+<button type="button" class="btn btn-warning">
+   <span class="glyphicon glyphicon-download-alt"></span> Export
+</button>
+</div>
+</div>
+<div class="panel-footer">Mots-clés:&nbsp&nbsp&nbsp&nbsp
+  <button type="button" class="btn btn-outline btn-warning">Sécurité</button>
+  <button type="button" class="btn btn-outline btn-warning">Incidents</button>
+  <button type="button" class="btn btn-outline btn-warning">Evènement de sécurité remarquable</button>
+</div>
+</div> -->
+
+
+</div>
+<!-- /.col-lg-8 -->
+<div class="col-lg-4">
+  <div class="panel panel-green">
+      <div class="panel-heading">
+          <i class="fa fa-cloud fa-fw"></i> Nuage de mots
+          <div class="pull-right">
+              <div class="btn-group">
+                  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                      Données
+                      <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" role="menu">
+                      {% for dataset in datasets %}<li><a href="#">{{dataset.title}}</a></li>{% endfor %}
+                      <li class="divider"></li>
+                      <li><a href="#">Toutes données combinées</a></li>
+                  </ul>
+              </div>
+          </div>
+
+      </div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+
+        <div class="center">
+          <img src="{% static 'img/wordcloud.png' %}" class="img-thumbnail">
+      </div>
+
+                          <!-- /.list-group -->
+                          <a href="#" class="btn btn-outline btn-success btn-block">Générer</a>
+                      </div>
+                      <!-- /.panel-body -->
+                  </div>
+                  <!-- /.panel -->
+
+                  <div class="panel panel-green">
+                      <div class="panel-heading">
+                          <i class="fa fa-clock-o fa-fw"></i> Responsive Timeline
+                      </div>
+                      <!-- /.panel-heading -->
+                      <div class="panel-body">
+                          <ul class="timeline">
+                              {% for notif in notifications %}
+                              <!-- change li class to "timeline-inverted" once in 2 entries -->
+                              <li class="{% cycle 'timeline' 'timeline-inverted' %}">
+                                  <div class="timeline-badge {{notif.get_status_style}}"><i class="fa fa-{{notif.get_type_style}}"></i> <!-- customize icon with property like {{task.type}} -->
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">{{notif.title}}</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> {{notif.time}}</small>
+                                          </p>
+                                      </div>
+                                <!--      <div class="timeline-body">
+                                          <p>Création de jeux de données 1</p>
+                                      </div> -->
+                                  </div>
+                              </li>
+                              {% endfor %}
+                              <!-- <li>
+                                  <div class="timeline-badge warning"><i class="fa fa-plus"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">Création Données 4</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> Il y a 25 minutes</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="timeline-inverted">
+                                  <div class="timeline-badge danger"><i class="fa fa-save"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">Modification Données 3</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> Il y a 2 heures</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li>
+                                  <div class="timeline-badge info"><i class="fa fa-plus"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">Création Données 3</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> Il y a 12 heures</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li class="timeline-inverted">
+                                  <div class="timeline-badge success"><i class="fa fa-plus"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">Création Données 2</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> Hier</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </li>
+                              <li>
+                                  <div class="timeline-badge"><i class="fa fa-plus"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                          <h4 class="timeline-title">Création Données 1</h4>
+                                          <p><small class="text-muted"><i class="fa fa-clock-o"></i> Il y a 2 jours</small>
+                                          </p>
+                                      </div>
+                                  </div>
+                              </li> -->
+                          </ul>
+                      </div>
+                      <!-- /.panel-body -->
+                  </div>
+                  <!-- /.panel -->
+
+             </div>
+              <!-- /.col-lg-4 -->
+          </div>
+          <!-- /.row -->
+      </div>
+      <!-- /#page-wrapper -->
+
+      {% endblock %}
+
+      {% block scripts %}
+<!-- Bootstrap Multiselect Js -->
+<script src="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.js' %}"></script>
+<script src="{% static 'js/page_dashboard.js' %}"></script>
+{% endblock %}

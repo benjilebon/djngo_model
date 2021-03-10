@@ -1,0 +1,9 @@
+  #hiddenInfo {
+    display: none;
+  }
+  #keywords-input-container .bootstrap-tagsinput {
+  min-height: 90px;
+  }
+  #sort-btn-container {
+  	padding: 15px 0;
+  }

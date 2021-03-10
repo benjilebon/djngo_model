@@ -1,0 +1,362 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Audensiel Kubex</title>
+    
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'bower_components/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="{% static 'bower_components/metisMenu/dist/metisMenu.min.css' %}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static 'dist/css/sb-admin-2.css' %}" rel="stylesheet">
+
+    <!-- Bootsrtap-tagsinput CSS -->
+    <link href="{% static 'assets/bootstrap-tagsinput/bootstrap-tagsinput.css' %}" rel="stylesheet">
+
+    <!-- My own CSS -->
+    <link href="{% static 'bower_components/bootstrap/dist/css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/global.css' %}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static 'bower_components/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{% static 'assets/ico/image002.jpg' %}">
+
+    {% block css %}
+    {% endblock %}
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif] -->
+
+
+
+    </head>
+
+    <body>
+
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">Portail Kubex</a>
+                </div>
+                <!-- /.navbar-header -->
+
+
+
+
+                <ul class="nav navbar-nav">
+                 <li><a href="dashboard">Tableau de Bord</a></li>
+                 <li><a href="graphics">Graphiques & Statistiques</a></li>
+                 <li><a href="kubex">Kubex</a></li>
+                 <li><a href="analysis">Analyses</a></li>
+                 <li><a href="datasets">Jeux de données</a></li>
+
+                    <!-- <li class="dropdown">
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                         <li><a href="#">Action</a></li>
+                         <li><a href="#">Another action</a></li>
+                         <li><a href="#">Something else here</a></li>
+                         <li class="divider"></li>
+                         <li class="dropdown-header">Nav header</li>
+                         <li><a href="#">Separated link</a></li>
+                         <li><a href="#">One more separated link</a></li>
+                     </ul> -->
+                 </li>
+             </ul>
+<!-- Bienvenue {{username}} -->
+
+             <ul class="nav navbar-top-links navbar-right">
+                <a href="manual" title="Manuel"><i class="fa fa-book fa-fw"></i></a>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" title="Tickets" data-toggle="dropdown" href="#">
+                        <i class="fa fa-support fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-support">
+                        {% for ticket in tickets|slice:":3" %}
+                        <li><a href="support#{{ticket.id}}">
+                            <div>
+                                <strong>{{ticket.title}}</strong>
+                                <span class="pull-right text-muted">{{ticket.get_status_display}}</span>
+                                {% if ticket.status != 'N' %}<span class="pull-right text-muted">Accepté par: <strong>{{ticket.in_charge.name}}</strong></span>{% endif %}
+                            </div>
+                        </a></li>
+                        <li class="divider"></li>
+                        {% endfor %}
+                        <li>
+                            <a class="text-center" href="support">
+                                <strong>Voir tous les tickets</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" title="Messages" data-toggle="dropdown" href="#">
+                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-messages">
+                        {% for message in messages|slice:":3" %}
+                        <li>
+                            <a href="inbox#{{message.id}}">
+                                <div>
+                                    <strong>{{message.sender.name}}</strong>
+                                    <span class="pull-right text-muted">
+                                        <em>{{message.time}}</em>
+                                    </span>
+                                </div>
+                                <div>{{message.title}}</div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        {% endfor %}
+                        <li>
+                            <a class="text-center" href="inbox">
+                                <strong>Voir tous les messages</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-messages -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" title="Analyses" data-toggle="dropdown" href="#">
+                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-tasks">
+                        {% for analyse in analyses|slice:":3" %}
+                        <li>
+                            <div><a href="tasks#{{analyse.id}}">
+                                <div>
+                                    <p>
+                                        <strong>Tâche {{analyse.id}} - {{analyse.title}}</strong>
+                                    </p>
+                                    <span class="pull-right text-muted">{{analyse.progress}}% Complete</span>
+                                    <span class="pull-right text-muted">Statut : <strong>{{analyse.get_status_display}}</strong> le <strong>{{analyse.modification_time}}</strong></span>
+                                    </div>
+                                    <div class="progress progress-striped active">
+                                        <div class="progress-bar progress-bar-{{analyse.get_status_style}}" role="progressbar" aria-valuenow="{{analyse.progress|floatformat}}" aria-valuemin="0" aria-valuemax="100" style="width: {{analyse.progress|floatformat}}%">
+                                            <span class="sr-only">{{analyse.progress}}% Complete ({{analyse.status}})</span>
+                                        </div>
+                                    </div>
+                                </div>
+                             </a>
+                        </li>
+                        <li class="divider"></li>
+                        {% endfor %}
+                        <li>
+                            <a class="text-center" href="tasks">
+                                <strong>Voir toutes les analyses</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-tasks -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" title="Notifications" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        {% if notif|length > 9999 %}
+                        <span class="badge" style="background-color:#f30c06;font-size:10px;">9999+</span>
+                        {% elif notif|length > 0 %}
+                        <span class="badge" style="background-color:#f30c06;font-size:10px;">{{notif|length}}</span>
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        {% for notif in notifications|slice:":3" %}
+                        <li>
+                            <a href="alerts#{{notif.id}}">
+                                <div>
+                                    <i class="fa fa-{{notif.get_type_style}} fa-fw"></i> {{notif.title}}
+                                    <span class="pull-right text-muted small">{{notif.time}}</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        {% endfor %}
+                        <li>
+                            <a class="text-center" href="alerts">
+                                <strong>Voir toutes les notifications</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" title="{{username}}" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="profile"><i class="fa fa-user fa-fw"></i> Profil</a></li>
+                        <li><a href="settings"><i class="fa fa-gear fa-fw"></i> Paramètres</a></li>
+                        {% if request.user.is_superuser %}
+                        <li><a href="admin"><i class="fa fa-users fa-fw"></i> Administration</a></li>
+                        {% endif %}
+                        <li class="divider"></li>
+                        <li><a href="logout"><i class="fa fa-sign-out fa-fw"></i> Déconnexion</a></li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-navnavbar-collaps">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div id="search-input-container" class="input-group custom-search-form">
+                                <input id="search-input" type="text" class="form-control" placeholder="Recherche Globale..." data-role="tagsinput">
+                                <span class="input-group-btn">
+                                    <button id="search-btn" class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        <li>
+                            <a href="dashboard"><i class="fa fa-dashboard fa-fw"></i> Tableau de bord</a>
+                        </li>
+                        <li>
+                          <a href="graphics"><i class="fa fa-bar-chart-o fa-fw"></i> Graphiques & Statistiques</a>
+                      </li>
+                      <li>
+                        <a href="analysis"><i class="fa fa-cog fa-fw"></i> Analyses</a>
+                    </li>
+                    <li>
+                        <a href="kubex"><i class="fa fa-cube fa-fw"></i> Kubex</a>
+                    </li>
+                    <li>
+                        <a href="datasets"><i class="fa fa-plus fa-fw"></i> Jeux de données</a>
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.sidebar-collapse -->
+        </div>
+        <!-- /.navbar-static-side -->
+    </nav>
+
+
+    <noscript>Pour utiliser ce site, merci d'activer JavaScript.</noscript>    
+    {% block content %}
+    {% endblock %}
+</div>
+<!-- /#wrapper -->
+<div id="keywordInfo" style="display:none;">
+    {% for keyword in keywords %}
+        <span>{{keyword.word}}</span>
+    {% endfor %}
+</div>
+
+<div  class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>
+
+<div id="confirmModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Confirmation</h4>
+      </div>
+      <div class="modal-body">
+        <p>Vous êtes sûr de supprimer ce jeux de données ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="deleteDataset(event)">Supprimer</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div id="editDatasetModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Editer dataset</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>Info du dataset: </b></p>
+        <strong>Kube</strong>: <span id="kube-name"></span><br>
+        <strong>Date</strong>: <span id="dataset-date"></span><br>
+        <strong>Taille</strong>: <span id="dataset-size"></span><br>
+        <label for="dataset-title">Dataset Title</label>
+        <input type="text" class="form-control" id="dataset-title" />
+        <label for="dataset-description">Dataset Description</label>
+        <input type="text" class="form-control" id="dataset-description" />
+        <label for="dataset-keyword">Dataset Keywords</label>
+        <input type="text" class="form-control" id="dataset-keyword" data-role="tagsinput" />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updateDataset(event)">Edit</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- jQuery -->
+<script src="{% static 'bower_components/jquery/dist/jquery.min.js' %}"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="{% static 'bower_components/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+
+<!-- Js cookie -->
+<script src="{% static 'assets/js-cookie/js.cookie.js' %}"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="{% static 'bower_components/metisMenu/dist/metisMenu.min.js' %}"></script>
+
+<!-- bootstrap-tagsinput JavaScript -->
+<script src="{% static 'assets/bootstrap-tagsinput/bootstrap-tagsinput.min.js' %}"></script>
+<script src="{% static 'assets/typeheadJs/typeahead.bundle.min.js' %}"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="{% static 'dist/js/sb-admin-2.js' %}"></script> 
+<script src="{% static 'assets/js/jquery.backstretch.js' %}"></script>
+<script src="{% static 'assets/js/scripts.js' %}"></script>
+
+<!-- Global functions for base template -->
+<script src="{% static 'js/base.js' %}"></script>
+{% block scripts %}
+{% endblock %}    
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+<div class="panel panel-primary" id="message_{{message.id}}">
+  <div class="panel-heading">
+    <strong>{{message.get_status_display}}</strong><br/>
+    <strong>De: </strong>{{message.sender.name}}<br/>
+    <strong>A : </strong>{{message.recipient.name}}<br/>
+    <strong>Le : </strong>{{message.time}}<br/>
+    <strong>Objet : </strong>{{message.title}}
+  </div>
+  <div class="panel panel-default">
+    {{message.description|linebreaks}}
+  </div>
+</div>

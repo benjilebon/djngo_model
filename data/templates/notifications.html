@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Notifications</a></h1>
+      <div class="pull-right">
+
+      </div>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+  <div class="row">
+
+    <div class="col-lg-12">
+<!--      <div class="panel panel-default"> -->
+<!--          <div class="panel-heading">
+           {{notif.task.task_link.title}}
+        </div> -->
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          {% for notif in notifications %}
+          <div class="alert alert-{{notif.get_status_style}} alert-dismissable" id="{{notif.id}}">
+            <i class="fa fa-{{notif.get_type_style}} fa-fw"></i>
+            <button type="button" class="close" data-dismiss="alert" onclick="deleteNotif(event)" aria-hidden="true">&times;</button>
+            {{notif.title}} <a href="{{notif.task}}" class="alert-link">{{notif.task.title}}</a>.
+          </div>
+          {% endfor %}
+        </div>
+        <!-- .panel-body -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}

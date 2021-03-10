@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'assets/css/page_dataset.css' %}" rel="stylesheet">
+    <!-- Bootstrap Multiselect CSS -->
+    <link href="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div id="page-wrapper">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Gestion des jeux de données</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+
+    </div><br>
+
+    <div id="alert_container"></div>
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="panel panel-green">
+          <form enctype="multipart/form-data" class="form-top" id="dataset-form" method="post" action="/api/dataset/add">
+            {% csrf_token %}
+          <fieldset enabled>
+          <div class="panel-heading">
+            <i class="fa fa-plus fa-fw"></i> Ajouter un jeu de données
+            <input required name="title" class="form-control" placeholder="Titre du jeu de données"></input>
+          </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                      <label for="kubex">Veuillez choisir le Kubex d'origine</label>
+                      <select required id="kubex" name="kubex" class="form-control">
+                         <!-- <option value="1">default Kubex</option> -->
+                        {% for kube in kubex %}
+                          <option value="{{kube.SN}}">{{kube.name}}</option>
+                        {% endfor %}
+
+                      </select>
+                  </div> <hr>
+                  <div class="form-group">
+                      <label for="data_format">Veuillez choisir le format des données</label>
+                      <select required id="data_format" name="data_format" class="form-control">
+                          {% for f in formats %}
+                          <option value="{{f.0}}">{{f.1}}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                  <hr>
+                  <div class="form-group" id="keywords-input-container">
+                      <label for="keywords-input">Veuillez choisir les mots-clés associés</label>
+                      <input type="text" id="keywords-input" name="keywords-input" class="form-control" data-role="tagsinput" />
+                  </div>
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="form-group">
+                      <label>Description</label>
+                      <textarea required rows=10 name="description" maxlength=400 placeholder="Décrivez brièvement les données" class="form-control"></textarea>
+                      </div>
+                      <hr>
+                      <div class="form-group">
+                        <input required type="file" name="data" class="form-control"></div>
+                      </div>
+                <div class="panel-footer">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" class="form-control">Ajouter</button>
+                </div>
+              </div>
+              </fieldset>
+          </form>
+        </div>
+
+      <div id="dataset-search-input-container" class="sidebar-search input-group custom-search-form row" style="width: 100%;">
+        <div class="col-md-6">
+          <input id="dataset-searchBar" type="text" class="form-control" placeholder="Chercher dans les jeux de données..." data-role="tagsinput">
+        </div>
+        <div class="col-md-4">
+          <span>Dans les champs</span>
+          <!-- <span title="Filter" style="padding: 10px;font-size: 20px;vertical-align: middle;"><i class="fa fa-filter"></i></span> -->
+          <select id="searchBar-filter" multiple="multiple">
+            <option value="title">Titre</option>
+            <option value="description">Description</option>
+            <option value="keywords">Mots-clés</option>
+          </select>
+           <span class="input-group-btn" style="display: inline-block;">
+              <button id="dataset-search-btn" class="btn btn-primary" type="button">
+                  <b>Lancer la recherche</b>&nbsp;&nbsp;<i class="fa fa-search"></i>
+              </button>
+          </span>
+        </div>
+      </div>
+      <div id="sort-btn-container" class="btn-group" role="toolbar">
+        <button type="button" data-sortKey="date" data-state="active-descend" class="btn btn-info">Date&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="title" data-state="deactive" class="btn btn-default">Titre&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="kube" date-state="deactive" class="btn btn-default">Kube&nbsp;<i class="fa fa-angle-down"></i></button>
+        <button type="button" data-sortKey="size" date-state="deactive" class="btn btn-default">Taille&nbsp;<i class="fa fa-angle-down"></i></button>
+      </div>
+      <br>
+      <div id="dataset-container">
+        {% for dataset in datasets %}
+        {% include "panels/dataset.html" with dataset=dataset only %}
+        {% endfor %}
+      </div>
+  </div>
+  <!-- /.row -->
+
+</div>
+<!-- /#page-wrapper -->
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Bootstrap Multiselect Js -->
+<script src="{% static 'assets/bootstrap-multiselect/bootstrap-multiselect.js' %}"></script>
+<script src="{% static 'js/page_dataset.js' %}"></script>
+{% endblock %}
